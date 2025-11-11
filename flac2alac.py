@@ -18,14 +18,13 @@ def convert_file(flac_file):
     tmp_file = flac_file.with_suffix('.tmp.m4a')
 
     if out_file.exists():
-        print(f"Skipping (already exists): {out_file}")
+        print(f"Skipping (already exists): {out_file.name}")
         return True
 
-    print(f"Converting: {flac_file} → {out_file}")
+    print(f"Converting: {flac_file.name}")
 
     try:
         output = call_on_shell(f'ffmpeg -loglevel error -y -i "{flac_file}" -c:v copy -c:a alac "{tmp_file}" 2>&1')
-
         if output:
             print(output)
             if tmp_file.exists():
